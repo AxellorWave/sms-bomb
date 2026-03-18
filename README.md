@@ -54,8 +54,8 @@ sms-bomb-master/
 ### 1. Клонирование репозитория
 
 ```bash
-git clone <repo-url>
-cd sms-bomb-master
+git clone https://github.com/AxellorWave/sms-bomb.git
+cd sms-bomb
 ```
 
 ### 2. Настройка переменных окружения
