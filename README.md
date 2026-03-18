@@ -62,10 +62,10 @@ cd sms-bomb
 
 ```bash
 mv .env.example .env
-mv whitelistexample whitelist
+mv whitelistexample.json whitelist.json
 ```
 
-Отредактируйте файлы `.env` `whitelist` под свои нужды.
+Отредактируйте файлы `.env` `whitelist.json` под свои нужды.
 
 ---
 

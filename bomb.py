@@ -125,3 +125,6 @@ def text(message):
         get_number(message, mes_id)
     else:
         bot.delete_message(chat_id = message.chat.id,message_id =message.id)
+
+if __name__ == "__main__":
+    bot.polling(non_stop = True)
