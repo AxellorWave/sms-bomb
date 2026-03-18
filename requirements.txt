@@ -1,0 +1,5 @@
+requests
+colorama
+user-agent
+pyTelegramBotAPI
+mysql-connector-python
