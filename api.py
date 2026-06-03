@@ -3,6 +3,8 @@ from requests import post
 from user_agent import generate_user_agent
 from random import randint
 import time
+from fake_useragent import UserAgent
+
 def mv(number,n=1):
     for _ in range(n):
         r = post('https://mv.com.ru/api/v1/send-code', data={'phone': f"{number}"})
