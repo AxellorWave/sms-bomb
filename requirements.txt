@@ -3,3 +3,4 @@ colorama
 user-agent
 pyTelegramBotAPI
 mysql-connector-python
+fake-useragent
