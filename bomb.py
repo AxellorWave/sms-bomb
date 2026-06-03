@@ -78,7 +78,12 @@ def spam(message,number,mes_id):
     lst = ['mv(number)','dns(number, is_call=1)','sm_center(number)', 
     'citilink(number)','dns(number)','gorpay(number)','avon(number)',
     'alfabank(number)','zaymer(number)','lenta(number)','wildberries(number)',
-    'kviku(number)','moe_online(number)','telegram(number)','mm(number)']
+    'kviku(number)','moe_online(number)','telegram(number)','mm(number)', 'rossko(number)',
+    'apteka(number)', 'magnit(number)', 'webbankir(number)', 'chetire_lapy(number)', 'papajohns(number)',
+    'papajohns_signup(number)', 'valta(number)', 'ecco(number)', 'viled(number)',  'dostavista(number)',
+    'lifemart(number)', 'igooods(number)', 'citydrive(number)',  'bolshoe_tv(number)', 'akbars(number)',
+    'nskbl(number)', 'svoefermerstvo(number)', 'joy_money(number)'
+]
     n=0
     info_text = ''
     for i in lst:
